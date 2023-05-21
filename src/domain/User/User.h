@@ -8,7 +8,5 @@ private:
     string PW;
 
 public:
-    User(string id, string pw){
-        
-    }
+    User(string id, string pw);
 };
