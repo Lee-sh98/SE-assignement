@@ -15,4 +15,5 @@ void ShowRecruitmentListUI::showMyRecruitmentList(ofstream* ofs, ShowRecruitment
 	for (Recruitment cur : (*v)) {
 		*ofs << cur.getJob() << " " << cur.getNumberOfPeople() << " " << cur.getDeadline() << endl;
 	}
+	*ofs << endl;
 }
