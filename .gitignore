@@ -1,1 +1,7 @@
 *.exe
+
+// visual studio ignorance
+*.sln
+*.vcxproj
+*.filters
+*.user
