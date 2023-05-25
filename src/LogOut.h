@@ -9,11 +9,11 @@
 
 class LogOut {
 private:
-  LogOutUI* logOutUI;
+  LogOutUI* logOutUI; // LogOutUI와 통신하는 LogOut boundary 객체 
 public:
-  LogOut();
-  LogOutUI* getLogOutUI();
-  void logOut(User*& currentUser);
+  LogOut(); // LogOut 생성자
+  LogOutUI* getLogOutUI(); // LogOutUI형 포인터를 반환한다
+  void logOut(User*& currentUser); // 로그아웃을 요청한 사용자를 로그아웃 시켜준다
 };
 
 #endif
