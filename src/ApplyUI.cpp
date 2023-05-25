@@ -8,6 +8,10 @@ ApplyUI::ApplyUI() {
 
 }
 
+void ApplyUI::startApplyInterface() {
+
+}
+
 void ApplyUI::apply(ifstream* ifs, ofstream* ofs,Apply* applyControl, User* currentUser, vector<Company*>& company) {
 	int businessNumber;
 	*ifs >> businessNumber;

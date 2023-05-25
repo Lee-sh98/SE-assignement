@@ -196,11 +196,13 @@ void doTask() {
             switch (menu_level_2) {
             case 1: 
             {
+                searchRecruitmentUI->startSearchRecruitmentInterface();
                 searchRecruitmentUI->findRecruitment(&ifs, &ofs,searchRecruitment ,&companyList);
                 break;
             }
             case 2: 
             {
+                applyUI->startApplyInterface();
                 applyUI->apply(&ifs, &ofs,apply,currUser, companyList);
                 break;
             }
