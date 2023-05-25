@@ -1,0 +1,50 @@
+1 1 1 company1 11111 companyID1 companyPW1
+1 1 1 company2 22222 companyID2 companyPW2
+1 1 2 applicant1 111111 applicantID1 applicantPW1
+1 1 2 applicant2 222222 applicantID2 applicantPW2
+1 1 2 applicant3 333333 applicantID3 applicantPW3
+1 1 2 applicant4 444444 applicantID4 applicantPW4
+1 1 2 applicant5 555555 applicantID5 applicantPW5
+2 1 companyID1 companyPW1
+3 1 accounting1 2 1111/11/11
+2 2
+2 1 companyID2 companyPW2
+3 1 IT1 2 1111/11/11
+2 2
+2 1 applicantID1 applicantPW1
+4 1 company1
+4 2 11111
+4 1 company2
+4 2 22222
+4 3
+5 1
+2 2
+2 1 applicantID2 applicantPW2
+4 1 company1
+4 2 11111
+4 1 company2
+4 2 22222
+5 1
+2 2
+2 1 applicantID3 applicantPW3
+4 1 company1
+4 2 11111
+5 1
+2 2
+2 1 applicantID4 applicantPW4
+4 1 company2
+4 2 22222
+5 1
+2 2
+2 1 applicantID5 applicantPW5
+4 1 company2
+4 2 22222
+5 1
+2 2
+2 1 companyID1 companyPW1
+5 1
+2 2
+2 1 companyID2 companyPW2
+5 1
+2 2
+6 1

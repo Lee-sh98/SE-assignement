@@ -1,0 +1,150 @@
+1.1.회원가입
+> 1 company1 11111 companyID1 companyPW1
+
+1.1.회원가입
+> 1 company2 22222 companyID2 companyPW2
+
+1.1.회원가입
+> 2 applicant1 111111 applicantID1 applicantPW1
+
+1.1.회원가입
+> 2 applicant2 222222 applicantID2 applicantPW2
+
+1.1.회원가입
+> 2 applicant3 333333 applicantID3 applicantPW3
+
+1.1.회원가입
+> 2 applicant4 444444 applicantID4 applicantPW4
+
+1.1.회원가입
+> 2 applicant5 555555 applicantID5 applicantPW5
+
+2.1. 로그인
+> 2 companyID1 companyPW1
+
+3.1 채용정보 등록
+accounting1 2 1111/11/11
+
+2.2 로그아웃
+> companyID1
+
+2.1. 로그인
+> 2 companyID2 companyPW2
+
+3.1 채용정보 등록
+IT1 2 1111/11/11
+
+2.2 로그아웃
+> companyID2
+
+2.1. 로그인
+> 2 applicantID1 applicantPW1
+
+4.1.  채용 정보 검색
+company1 11111 accounting1 2 1111/11/11
+
+4.2. 채용 지원
+company1 11111 accounting1
+
+4.1.  채용 정보 검색
+company2 22222 IT1 2 1111/11/11
+
+4.2. 채용 지원
+company2 22222 IT1
+
+4.3. 지원 정보 조회
+company1 11111 accounting1 2 1111/11/11
+company2 22222 IT1 2 1111/11/11
+
+5.1. 지원 정보 통계
+IT1 1
+accounting1 1
+
+2.2 로그아웃
+> applicantID1
+
+2.1. 로그인
+> 2 applicantID2 applicantPW2
+
+4.1.  채용 정보 검색
+company1 11111 accounting1 2 1111/11/11
+
+4.2. 채용 지원
+company1 11111 accounting1
+
+4.1.  채용 정보 검색
+company2 22222 IT1 2 1111/11/11
+
+4.2. 채용 지원
+company2 22222 IT1
+
+5.1. 지원 정보 통계
+IT1 1
+accounting1 1
+
+2.2 로그아웃
+> applicantID2
+
+2.1. 로그인
+> 2 applicantID3 applicantPW3
+
+4.1.  채용 정보 검색
+company1 11111 accounting1 2 1111/11/11
+
+4.2. 채용 지원
+company1 11111 accounting1
+
+5.1. 지원 정보 통계
+accounting1 1
+
+2.2 로그아웃
+> applicantID3
+
+2.1. 로그인
+> 2 applicantID4 applicantPW4
+
+4.1.  채용 정보 검색
+company2 22222 IT1 2 1111/11/11
+
+4.2. 채용 지원
+company2 22222 IT1
+
+5.1. 지원 정보 통계
+IT1 1
+
+2.2 로그아웃
+> applicantID4
+
+2.1. 로그인
+> 2 applicantID5 applicantPW5
+
+4.1.  채용 정보 검색
+company2 22222 IT1 2 1111/11/11
+
+4.2. 채용 지원
+company2 22222 IT1
+
+5.1. 지원 정보 통계
+IT1 1
+
+2.2 로그아웃
+> applicantID5
+
+2.1. 로그인
+> 2 companyID1 companyPW1
+
+5.1. 채용 정보 통계
+accounting1 3
+
+2.2 로그아웃
+> companyID1
+
+2.1. 로그인
+> 2 companyID2 companyPW2
+
+5.1. 채용 정보 통계
+IT1 4
+
+2.2 로그아웃
+> companyID2
+
