@@ -2,7 +2,8 @@
 #include <iostream>
 #include <fstream>
 #include <locale>
-// 변경
+
+// 모든 usecase에 대한 헤더파일 include
 #include "User.h"
 #include "Applicant.h"
 #include "Company.h"
@@ -18,15 +19,9 @@
 #include "CancelApplication.h"
 #include "ApplicationStatistics.h"
 #include "RecruitmentStatistics.h"
-//
 
 #define INPUT_FILE_NAME "input.txt"
 #define OUTPUT_FILE_NAME "output.txt"
-
-// 변경
-#define MAX_APPLICANT_NUM 100
-#define MAX_COMPANY_NUM 100
-//
 
 using namespace std;
 
@@ -36,35 +31,21 @@ void program_exit(int& exit_flag);
 ifstream ifs;
 ofstream ofs;
 
-vector<Applicant*> applicantList;
-vector<Company*> companyList;
+vector<Applicant*> applicantList; // 지원자 회원을 저장하는 벡터
+vector<Company*> companyList; // 회사 회원을 저장하는 벡터
 
 
 int main() {
     ifs.open(INPUT_FILE_NAME);
     ofs.open(OUTPUT_FILE_NAME);
     
-
     doTask();
 
     return 0;
 }
 
 void doTask() {
-    /*
-    * system에서 사용할 Company, Applicant 저장소
-    * DB가 없으므로 => on memory 형태로 선언 및 Entity를 사용하는 Controller에 매개변수로 전달
-    * 즉, Repository를 각 controller에 주입하는 것의 역할
-    */
-    //Company *companyList[MAX_COMPANY_NUM];
-    //Applicant *applicantList[MAX_APPLICANT_NUM];
-    //int companyIdx = 0;
-    //int applicantIdx = 0;
-
-    /*
-    * 의존성 주입 
-    * 모든 usecase의 controller 선언 및 boundary에 해당 controller 주입
-    */
+    // usecase에 대한 control과 boundary class 선언 (~84line)
     // 회원가입
     SignUp* signUp = new SignUp(&companyList, &applicantList);
     signUp->getSignUpUI()->setSignUpController(signUp);
@@ -77,7 +58,6 @@ void doTask() {
     // 로그아웃
     LogOut* logOut = new LogOut();
     LogOutUI* logOutUI = logOut->getLogOutUI();
-    
     //채용정보 등록
     AddRecruitment* addRecruitment = new AddRecruitment();
     AddRecruitmentUI* addRecruitmentUI = addRecruitment->getAddRecruitmentUI();
@@ -96,12 +76,9 @@ void doTask() {
     // 지원 취소
     CancelApplication* cancelApplication = new CancelApplication();
     CancelApplicationUI* cancelApplicationUI = new CancelApplicationUI();
-
-
     // 지원 정보 통계
     ApplicationStatistics* applicationStatistics = new ApplicationStatistics();
     ApplicationStatisticsUI* applicationStatisticsUI = applicationStatistics->getApplicationStatisticsUI();
-    
     // 채용 정보 통계
     RecruitmentStatistics* recruitmentStatistics = new RecruitmentStatistics();
     RecruitmentStatisticsUI* recruitmentStatisticsUI = recruitmentStatistics->getRecruitmentStatisticsUI();
@@ -110,7 +87,7 @@ void doTask() {
     int menu_level_1 = 0, menu_level_2 = 0;
     int is_program_exit = 0;
 
-    User* currUser = new User("","");
+    User* currUser = new User("",""); // 현재 로그인 중인 회원의 정보를 저장(Company or Applicant)
 
     while (!is_program_exit) {
         ifs >> menu_level_1 >> menu_level_2;
@@ -122,29 +99,21 @@ void doTask() {
             {
             case 1: // 회원 가입
             {
-                // communicationDiagram: 회원가입 1.
-                signUp->getSignUpUI()->startSignUpInterface();
-
-                // 사용자의 입력
+                signUp->getSignUpUI()->startSignUpInterface(); // 회원가입 Boundary class의 startInterface()호출
                 int userType;
                 ifs >> userType;
-                
-                if (userType == 1) {
-                    // communicationDiagram: 회원가입 2
-                    
+                if (userType == 1) { // usetType == 1(Company)라면 Company회원가입 
                     signUp->getSignUpUI()->createCompany(&ifs, &ofs);
                 }
-                if (userType == 2) {
-                    // communicationDiagram: 회원가입 2
+                if (userType == 2) { // usetType == 2(Applicant)라면 Applicant회원가입 
                     signUp->getSignUpUI()->createApplicant(&ifs, &ofs);
                 }
                 break;
             }
             case 2: // 회원 탈퇴
             {
-                withDraw->getWithdrawUI()->startWithdrawInterface();
-                withDraw->getWithdrawUI()->withdraw(&ofs, currUser->getID());
-                //currUser = nullptr;
+                withDraw->getWithdrawUI()->startWithdrawInterface(); // 회원탈퇴 Boundary class의 startInterface()호출
+                withDraw->getWithdrawUI()->withdraw(&ofs, currUser->getID()); // 현재 로그인 중인 user ID를 함께 boundary로 전달
                 break;
             }
             }
@@ -156,15 +125,14 @@ void doTask() {
             {
             case 1: // 로그인
             {
-                // communicationDiagram: 로그인 .
-                signIn->getSignInUI()->startSignInInterface();
-                currUser = signIn->getSignInUI()->sighIn(&ifs, &ofs);
+                signIn->getSignInUI()->startSignInInterface(); // 로그인 Boundary class의 startInterface()호출
+                currUser = signIn->getSignInUI()->sighIn(&ifs, &ofs); // 로그인 진행 후, 현재 로그인 중인 정보를 저장(currUser)
                 break;
             }
             case 2: // 로그아웃
             {
-                logOutUI->startLogOutInterface();
-                logOutUI->logOut(&ofs, currUser, logOut);
+                logOutUI->startLogOutInterface(); // 로그아웃 Boundary class의 startInterface()호출
+                logOutUI->logOut(&ofs, currUser, logOut); // 로그아웃을 진행할 현재 로그인 중인 User정보를 함께 전당
                 break;
             }
             }
@@ -173,19 +141,16 @@ void doTask() {
         case 3: // 채용 관리
         {
             switch (menu_level_2) {
-            case 1:
+            case 1: // 채용 등록
             {
-                addRecruitmentUI->startAddRecruitmentInterface();
-                
-                addRecruitmentUI->createNewRecruitment(&ifs, &ofs, addRecruitment, currUser);
-
+                addRecruitmentUI->startAddRecruitmentInterface(); // 채용등록 Boundary class의 startInterface()호출
+                addRecruitmentUI->createNewRecruitment(&ifs, &ofs, addRecruitment, currUser); // 어느 회사에 채용정보를 등록할지 식별하기 위해, 현재 로그인 중인 User(Company)정보를 함께 전달
                 break;
             }
-            case 2:
+            case 2: // 채용정보 조회
             {
-                showRecruitmentListUI->startShowRecruitmentListInterface();
-                showRecruitmentListUI->showMyRecruitmentList(&ofs, showRecruitmentList, currUser);
-
+                showRecruitmentListUI->startShowRecruitmentListInterface(); // 채용조회 Boundary class의 startInterface()호출
+                showRecruitmentListUI->showMyRecruitmentList(&ofs, showRecruitmentList, currUser); // 어느 회사의 채용정보 조회인지 식별하기 위해, 현재 로그인 중인 User(Company)정보를 함께 전달
                 break;
             }
             }
@@ -194,28 +159,35 @@ void doTask() {
         case 4: // 지원 관리
         {
             switch (menu_level_2) {
-            case 1: 
+            case 1: // 회사명으로 채용정보 검색
             {
-                searchRecruitmentUI->startSearchRecruitmentInterface();
-                searchRecruitmentUI->findRecruitment(&ifs, &ofs,searchRecruitment ,&companyList);
+                searchRecruitmentUI->startSearchRecruitmentInterface(); // 채용등록 Boundary class의 startInterface()호출
+                searchRecruitmentUI->findRecruitment(&ifs, &ofs,searchRecruitment ,&companyList); // 회사명으로 검색을 위해 현재 등록되어있는 회사리스트(cpmpanyList) 정보를 함께 전달
                 break;
             }
-            case 2: 
+            case 2: // 지원
             {
-                applyUI->startApplyInterface();
-                applyUI->apply(&ifs, &ofs,apply,currUser, companyList);
+                applyUI->startApplyInterface(); // 지원 Boundary class의 startInterface()호출
+                applyUI->apply(&ifs, &ofs,apply,currUser, companyList); //어느 회사에 지원했는지 식별을 위해 현재 등록되어있는 회사리스트(cpmpanyList) 정보를 함께 전달
                 break;
             }
-            case 3: 
+            case 3: // 지원정보 조회
             {
-                inquireApplicationUI->startInquireApplicationUI();
-                inquireApplicationUI->displayApplications(&ofs,inquireApplication, currUser);
+                inquireApplicationUI->startInquireApplicationUI(); // 지원정보 조회 Boundary class의 startInterface()호출
+                inquireApplicationUI->displayApplications(&ofs,inquireApplication, currUser); // 어느 지원자의 지원정보를 조회할 지 식별하기 위해 현재 로그인 중인 User(Applicant)정보를 함께 전달
                 break;
             }
+<<<<<<< HEAD
             case 4: //지원 취소
             {
                 cancelApplicationUI->startCancelApplicaitonInterface(); 
                 cancelApplicationUI->selectApplication(ifs, ofs, (Applicant*)currUser,companyList);
+=======
+            case 4: // 지원 취소
+            {
+                cancelApplicationUI->startCancelApplicaitonInterface(); // 지원 취소 Boundary class의 startInterface()호출
+                cancelApplicationUI->selectApplication(ifs, ofs, (Applicant*)currUser, companyList); // 어느 지원자의 지원정보를 취소할 지 식별하기 위해 현재 로그인 중인 User(Applicant)정보를 함께 전달
+>>>>>>> 32e1d4003ba3fe54965abbb26258c86f11457caf
                 break;
             }
             }
@@ -225,19 +197,20 @@ void doTask() {
         case 5: // 통계 관리
         {
             switch (menu_level_2) {
-            case 1: {
-
-                if (dynamic_cast<Applicant*>(currUser) == nullptr) {    // 채용 정보 통계
-                    recruitmentStatisticsUI->startRecruitmentStatisticsInterface();
-                    recruitmentStatisticsUI->recruitmentStatistics(&ofs, recruitmentStatistics,currUser);
+            case 1: { 
+                // 채용 정보 통계
+                // 현재 로그인 중인 User의 식별을 위한 동적 형변환
+                if (dynamic_cast<Applicant*>(currUser) == nullptr) { // 현재 로그인 중인 User가 Company일 경우
+                    recruitmentStatisticsUI->startRecruitmentStatisticsInterface(); // 채용정보 통계 Boundary class의 startInterface()호출
+                    recruitmentStatisticsUI->recruitmentStatistics(&ofs, recruitmentStatistics, currUser); // 어느 회사의 채용정보 통계를 조회할지 식별하기 위해, 현재 로그인 중인 Company의 정보를 함께 전달
                 }
-                else {  // 지원 정보 통계
-                    applicationStatisticsUI->startApplicationStatisticsInterface();
-                    applicationStatisticsUI->applicationStatistics(&ofs,applicationStatistics,(Applicant *)currUser);
+                // 지원 정보 통계 
+                else { // 현재 로그인 중인 User가 Company일 경우
+                    applicationStatisticsUI->startApplicationStatisticsInterface(); // 지원정보 통계 Boundary class의 startInterface()호출
+                    applicationStatisticsUI->applicationStatistics(&ofs,applicationStatistics,(Applicant *)currUser); // 어느 지원자의 지원정보 통계를 조회할지 식별하기 위해, 현재 로그인 중인 Applicant의 정보를 함께 전달
                 }
                 break;
             }
-
             }
             break;
         }
