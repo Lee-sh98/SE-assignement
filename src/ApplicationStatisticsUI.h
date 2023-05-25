@@ -13,13 +13,13 @@ class ApplicationStatistics;
 
 class ApplicationStatisticsUI {
 private:
-	ApplicationStatistics* applicationStatisticsController;
+	ApplicationStatistics* applicationStatisticsController; // ApplicationStatisticsUI와 통신하는 ApplicationStatistics control객체
 
 public:
-	ApplicationStatisticsUI();
-	void setApplicationStatisticsController(ApplicationStatistics* controller);
-	void startApplicationStatisticsInterface();
-	void applicationStatistics(ofstream* ofs, ApplicationStatistics* applicationStatistics, Applicant* currentUser);
+	ApplicationStatisticsUI(); // ApplicationStatisticsUI의 생성자
+	void setApplicationStatisticsController(ApplicationStatistics* controller);  // ApplicationStatisticsUI의 control을 초기화 함
+	void startApplicationStatisticsInterface(); // ApplicationStatisticsUI의 시작 인터페이스를 보여줌
+	void applicationStatistics(ofstream* ofs, ApplicationStatistics* applicationStatistics, Applicant* currentUser); // 현재 사용중인 User의 지원 정보 통계를 업무별로 출력
 
 };
 

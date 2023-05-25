@@ -212,9 +212,9 @@ void doTask() {
                 inquireApplicationUI->displayApplications(&ofs,inquireApplication, currUser);
                 break;
             }
-            case 4: 
+            case 4: //지원 취소
             {
-                cancelApplicationUI->startCancelApplicaitonInterface();
+                cancelApplicationUI->startCancelApplicaitonInterface(); 
                 cancelApplicationUI->selectApplication(ifs, ofs, (Applicant*)currUser,companyList);
                 break;
             }

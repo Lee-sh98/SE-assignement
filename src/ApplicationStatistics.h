@@ -9,13 +9,12 @@
 
 class ApplicationStatistics {
 private:
-	ApplicationStatisticsUI* applicationStatisticsUI;
-	Applicant* applicant;
+	ApplicationStatisticsUI* applicationStatisticsUI;// ApplicationStatistics과 통신하는 ApplicationStatisticsUI 객체
 
 public:
-	ApplicationStatistics();
-	vector<Application>* showApplicationStatistics(Applicant* currentUser);
-	ApplicationStatisticsUI* getApplicationStatisticsUI();
+	ApplicationStatistics();// ApplicationStatistics control 생성자
+	vector<Application>* showApplicationStatistics(Applicant* currentUser); // ApplicationList를 받기위한 함수
+	ApplicationStatisticsUI* getApplicationStatisticsUI(); // ApplicationStatisticsUI*를 반환하는 함수
 };
 
 #endif
