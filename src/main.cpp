@@ -177,17 +177,10 @@ void doTask() {
                 inquireApplicationUI->displayApplications(&ofs,inquireApplication, currUser); // 어느 지원자의 지원정보를 조회할 지 식별하기 위해 현재 로그인 중인 User(Applicant)정보를 함께 전달
                 break;
             }
-<<<<<<< HEAD
-            case 4: //지원 취소
-            {
-                cancelApplicationUI->startCancelApplicaitonInterface(); 
-                cancelApplicationUI->selectApplication(ifs, ofs, (Applicant*)currUser,companyList);
-=======
             case 4: // 지원 취소
             {
                 cancelApplicationUI->startCancelApplicaitonInterface(); // 지원 취소 Boundary class의 startInterface()호출
                 cancelApplicationUI->selectApplication(ifs, ofs, (Applicant*)currUser, companyList); // 어느 지원자의 지원정보를 취소할 지 식별하기 위해 현재 로그인 중인 User(Applicant)정보를 함께 전달
->>>>>>> 32e1d4003ba3fe54965abbb26258c86f11457caf
                 break;
             }
             }
@@ -217,7 +210,8 @@ void doTask() {
         case 6:
         {
             switch (menu_level_2) {
-            case 1:{
+            case 1: // 프로그램 종료
+            {    
                 program_exit(is_program_exit);
             }
             }
@@ -227,5 +221,6 @@ void doTask() {
 }
 
 void program_exit(int& exit_flag) {
+    ofs << "6.1. 종료" << endl;
     exit_flag = 1;
 }
