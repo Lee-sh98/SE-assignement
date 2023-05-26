@@ -1,8 +1,8 @@
 #include "Applicant.h"
 #include <iostream>
 using namespace std;
-Applicant::Applicant() {
-    this->ownedApplicationCollection = new ApplicationCollection();
+Applicant::Applicant() {    
+    this->ownedApplicationCollection = new ApplicationCollection(); // 신규 지원자 객체 생성시 지원서 collection 함께 생성
 }
 
 Applicant::~Applicant() {

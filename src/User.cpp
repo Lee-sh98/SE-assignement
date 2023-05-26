@@ -4,7 +4,6 @@
 User::User() {}
 
 User::User(string id, string pw) {
-	//cout << "USER»ý¼ºÀÚ" << endl;
 	this->ID = id;
 	this->PW = pw;
 }
